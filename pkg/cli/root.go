@@ -6,7 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/udhos/acigo/aci"
+	"github.com/danehans/acigo/aci"
 )
 
 var (
@@ -91,4 +91,11 @@ func passFromCmd(cmd *cobra.Command) string {
 		exitWithError(ExitBadArgs, err)
 	}
 	return password
+}
+
+func validateArgs(cmd *cobra.Command, args []string) error {
+	if len(args) != 0 {
+		return usageError(cmd, "Unexpected args: %v", args)
+	}
+	return nil
 }

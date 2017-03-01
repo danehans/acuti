@@ -1,6 +1,8 @@
 package cli
 
 import (
+	"fmt"
+
 	"github.com/spf13/cobra"
 )
 
@@ -8,25 +10,24 @@ import (
 var (
 	tenantDeleteCmd = &cobra.Command{
 		Use:   "delete",
-		Short: "Create an ACI tenant",
-		Long:  `Create an ACI tenant`,
+		Short: "Delete an ACI tenant",
+		Long:  `Delete an ACI tenant`,
 		Run:   runTenantDelete,
 	}
-	delName string
 )
 
 func init() {
 	tenantCmd.AddCommand(tenantDeleteCmd)
-	tenantDeleteCmd.Flags().StringVar(&delName, "name", "n", "Name of tenant")
+	tenantDeleteCmd.Flags().StringVar(&aciFlags.name, "name", "", "Name of tenant")
 	tenantDeleteCmd.MarkFlagRequired("name")
 }
 
 func runTenantDelete(cmd *cobra.Command, args []string) {
-	if len(delName) == 0 {
+	if len(aciFlags.name) == 0 {
 		cmd.Help()
 		return
 	}
-	if err := validateTenantDeleteArgs(cmd, args); err != nil {
+	if err := validateArgs(cmd, args); err != nil {
 		return
 	}
 
@@ -38,20 +39,15 @@ func runTenantDelete(cmd *cobra.Command, args []string) {
 	}
 
 	// Note client package uses add naming instead of create.
-	err = client.TenantDel(delName)
+	err = client.TenantDel(aciFlags.name)
 	if err != nil {
 		exitWithError(ExitError, err)
 	}
+
+	fmt.Printf("Tenant %s deleted.\n", aciFlags.name)
 
 	err = client.Logout()
 	if err != nil {
 		exitWithError(ExitError, err)
 	}
-}
-
-func validateTenantDeleteArgs(cmd *cobra.Command, args []string) error {
-	if len(args) != 0 {
-		return usageError(cmd, "Unexpected args: %v", args)
-	}
-	return nil
 }

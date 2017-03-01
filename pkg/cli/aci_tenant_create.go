@@ -1,10 +1,12 @@
 package cli
 
 import (
+	"fmt"
+
 	"github.com/spf13/cobra"
 )
 
-// tenantCreateCmd creates an CI Tenant.
+// tenantCreateCmd creates an ACI Tenant.
 var (
 	tenantCreateCmd = &cobra.Command{
 		Use:   "create",
@@ -12,23 +14,21 @@ var (
 		Long:  `Create an ACI tenant`,
 		Run:   runTenantCreate,
 	}
-	addName     string
-	description string
 )
 
 func init() {
 	tenantCmd.AddCommand(tenantCreateCmd)
-	tenantCreateCmd.Flags().StringVar(&addName, "name", "n", "Name of tenant")
-	tenantCreateCmd.Flags().StringVar(&description, "description", "d", "Description of tenant")
+	tenantCreateCmd.Flags().StringVar(&aciFlags.name, "name", "", "Name of tenant")
+	tenantCreateCmd.Flags().StringVar(&aciFlags.descr, "description", "", "Description of tenant")
 	tenantCreateCmd.MarkFlagRequired("name")
 }
 
 func runTenantCreate(cmd *cobra.Command, args []string) {
-	if len(addName) == 0 {
+	if len(aciFlags.name) == 0 {
 		cmd.Help()
 		return
 	}
-	if err := validateTenantCreateArgs(cmd, args); err != nil {
+	if err := validateArgs(cmd, args); err != nil {
 		return
 	}
 
@@ -40,20 +40,15 @@ func runTenantCreate(cmd *cobra.Command, args []string) {
 	}
 
 	// Note client package uses add naming instead of create.
-	err = client.TenantAdd(addName, description)
+	err = client.TenantAdd(aciFlags.name, aciFlags.descr)
 	if err != nil {
 		exitWithError(ExitError, err)
 	}
+
+	fmt.Printf("Tenant %s created.\n", aciFlags.name)
 
 	err = client.Logout()
 	if err != nil {
 		exitWithError(ExitError, err)
 	}
-}
-
-func validateTenantCreateArgs(cmd *cobra.Command, args []string) error {
-	if len(args) != 0 {
-		return usageError(cmd, "Unexpected args: %v", args)
-	}
-	return nil
 }
