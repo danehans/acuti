@@ -7,21 +7,21 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// appListCmd describes a Group.
-var appListCmd = &cobra.Command{
+// brListCmd lists ACI bridge domains.
+var brListCmd = &cobra.Command{
 	Use:   "list",
-	Short: "Lists ACI application profiles for a tenant",
-	Long:  `Lists ACI application profiles for a tenant`,
-	Run:   runAppListCmd,
+	Short: "Lists ACI bridge domains for a tenant",
+	Long:  `Lists ACI bridge domains for a tenant`,
+	Run:   runBrListCmd,
 }
 
 func init() {
-	appCmd.AddCommand(appListCmd)
-	appListCmd.Flags().StringVar(&aciFlags.tenant, "tenant", "", "Name of tenant")
-	appListCmd.MarkFlagRequired("tenant")
+	brCmd.AddCommand(brListCmd)
+	brListCmd.Flags().StringVar(&aciFlags.tenant, "tenant", "", "Name of tenant")
+	brListCmd.MarkFlagRequired("tenant")
 }
 
-func runAppListCmd(cmd *cobra.Command, args []string) {
+func runBrListCmd(cmd *cobra.Command, args []string) {
 	if len(aciFlags.tenant) == 0 {
 		cmd.Help()
 		return
@@ -47,9 +47,9 @@ func runAppListCmd(cmd *cobra.Command, args []string) {
 		exitWithError(ExitError, err)
 	}
 
-	// Send application profile list request to APIC API
+	// Send bridge profile list request to APIC API
 	var resp []map[string]interface{}
-	resp, err = client.ApplicationProfileList(aciFlags.tenant)
+	resp, err = client.BridgeDomainList(aciFlags.tenant)
 	if err != nil {
 		exitWithError(ExitError, err)
 	}
