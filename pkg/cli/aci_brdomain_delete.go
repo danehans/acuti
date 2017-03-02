@@ -12,7 +12,7 @@ var (
 		Use:   "delete",
 		Short: "Delete an ACI bridge domain",
 		Long:  `Delete an ACI bridge domain`,
-		Run:   rrunBrDel,
+		Run:   runBrDel,
 	}
 )
 
@@ -24,7 +24,7 @@ func init() {
 	brDelCmd.MarkFlagRequired("name")
 }
 
-func rrunBrDel(cmd *cobra.Command, args []string) {
+func runBrDel(cmd *cobra.Command, args []string) {
 	if len(aciFlags.tenant) == 0 {
 		cmd.Help()
 		return
