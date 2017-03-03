@@ -13,11 +13,15 @@ var (
 	}
 	// aciFlags that can be set for any ACI subcommand.
 	aciFlags = struct {
-		name     string
-		app      string
-		tenant   string
-		brdomain string
-		descr    string
+		name        string
+		app         string
+		tenant      string
+		brdomain    string
+		vpoolName   string
+		vlanMode    string
+		vrangeStart string
+		vrangeStop  string
+		descr       string
 	}{}
 )
 

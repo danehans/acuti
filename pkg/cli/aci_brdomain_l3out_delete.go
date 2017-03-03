@@ -10,8 +10,8 @@ import (
 var (
 	brOutDelCmd = &cobra.Command{
 		Use:   "delete",
-		Short: "Delete an ACI application profile",
-		Long:  `Delete an ACI application profile`,
+		Short: "Delete an ACI bridge domain",
+		Long:  `Delete an ACI bridge domain`,
 		Run:   RunBrOutDelCmd,
 	}
 )
@@ -22,7 +22,7 @@ func init() {
 	brOutDelCmd.Flags().StringVar(&aciFlags.brdomain, "bridge-domain", "", "Name of bridge domain")
 	brOutDelCmd.Flags().StringVar(&aciFlags.name, "name", "", "Name of L3 outside network connection")
 	brOutDelCmd.MarkFlagRequired("tenant")
-	brOutDelCmd.MarkFlagRequired("tbridge-domain")
+	brOutDelCmd.MarkFlagRequired("bridge-domain")
 	brOutDelCmd.MarkFlagRequired("name")
 }
 

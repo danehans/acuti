@@ -10,22 +10,28 @@ import (
 var (
 	appDelCmd = &cobra.Command{
 		Use:   "delete",
-		Short: "Delete an ACI application profile",
-		Long:  `Delete an ACI application profile`,
-		Run:   runAppDel,
+		Short: "Delete an ACI app",
+		Long:  `Delete an ACI app`,
+		Run:   RunAppDel,
 	}
 )
 
 func init() {
 	appCmd.AddCommand(appDelCmd)
 	appDelCmd.Flags().StringVar(&aciFlags.tenant, "tenant", "", "Name of tenant")
-	appDelCmd.Flags().StringVar(&aciFlags.name, "name", "", "Name of application profile")
+	appCreateCmd.Flags().StringVar(&aciFlags.app, "app", "", "Name of application profile")
+	appDelCmd.Flags().StringVar(&aciFlags.name, "name", "", "Name of app")
 	appDelCmd.MarkFlagRequired("tenant")
+	appDelCmd.MarkFlagRequired("app")
 	appDelCmd.MarkFlagRequired("name")
 }
 
-func runAppDel(cmd *cobra.Command, args []string) {
+func RunAppDel(cmd *cobra.Command, args []string) {
 	if len(aciFlags.tenant) == 0 {
+		cmd.Help()
+		return
+	}
+	if len(aciFlags.app) == 0 {
 		cmd.Help()
 		return
 	}
@@ -49,7 +55,7 @@ func runAppDel(cmd *cobra.Command, args []string) {
 		exitWithError(ExitError, err)
 	}
 
-	fmt.Printf("Application profile %s deleted for tenant %s.\n", aciFlags.name, aciFlags.tenant)
+	fmt.Printf("Application profile %s deleted.\n", aciFlags.name)
 
 	err = client.Logout()
 	if err != nil {
