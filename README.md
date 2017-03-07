@@ -1,2 +1,2 @@
-# octogo
-A Client that does it all written in Go
+Acuti (pronounced a-cutie) is a CLI utility for talking to the Cisco
+APIC REST API for managing an ACI fabric.

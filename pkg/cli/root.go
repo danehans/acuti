@@ -10,13 +10,13 @@ import (
 )
 
 var (
-	// RootCmd is the base bootcmd command.
+	// RootCmd is the base acictl command.
 	RootCmd = &cobra.Command{
-		Use:   "octoctl",
-		Short: "A command line client for everything.",
-		Long: `A CLI for...
+		Use:   "acictl",
+		Short: "A command line utility for managing Cisco ACI",
+		Long: `A command line utility for managing Cisco ACI
 
-To get help about a resource or command, run "bootcmd help resource"`,
+To get help about a resource or command, run "acictl help resource"`,
 	}
 
 	// globalFlags can be set for any subcommand.
@@ -24,6 +24,19 @@ To get help about a resource or command, run "bootcmd help resource"`,
 		hosts    []string
 		username string
 		password string
+	}{}
+
+	// aciFlags that can be set for any ACI subcommand.
+	aciFlags = struct {
+		name        string
+		app         string
+		tenant      string
+		brdomain    string
+		vpoolName   string
+		vlanMode    string
+		vrangeStart string
+		vrangeStop  string
+		descr       string
 	}{}
 )
 
@@ -51,14 +64,14 @@ func mustClientFromCmd(cmd *cobra.Command) *aci.Client {
 	user := userFromCmd(cmd)
 	pass := passFromCmd(cmd)
 
-	// client config
+	// Sets ACI client configuration options.
 	opts := aci.ClientOptions{
 		Hosts: hosts,
 		User:  user,
 		Pass:  pass,
 	}
 
-	// ACI Client
+	// Creates an instance of the ACI Client.
 	client, err := aci.New(opts)
 	if err != nil {
 		exitWithError(ExitBadConnection, err)
@@ -66,7 +79,7 @@ func mustClientFromCmd(cmd *cobra.Command) *aci.Client {
 	return client
 }
 
-// hostsFromCmd returns the host arguments.
+// hostsFromCmd returns the hosts argument.
 func hostsFromCmd(cmd *cobra.Command) []string {
 	hosts, err := cmd.Flags().GetStringSlice("hosts")
 	if err != nil {
@@ -93,6 +106,7 @@ func passFromCmd(cmd *cobra.Command) string {
 	return password
 }
 
+// TODO: Remove or refactor arg validation.
 func validateArgs(cmd *cobra.Command, args []string) error {
 	if len(args) != 0 {
 		return usageError(cmd, "Unexpected args: %v", args)
