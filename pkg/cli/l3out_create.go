@@ -20,7 +20,7 @@ func init() {
 	l3outCmd.AddCommand(l3outCreateCmd)
 	l3outCreateCmd.Flags().StringVar(&aciFlags.tenant, "tenant", "", "Name of tenant")
 	l3outCreateCmd.Flags().StringVar(&aciFlags.name, "name", "", "Name of L3 outside network connection")
-	l3outCreateCmd.Flags().StringVar(&aciFlags.descr, "description", "", "Description of L3 outside network connection")
+	l3outCreateCmd.Flags().StringVar(&aciFlags.descr, "descr", "", "Description of L3 outside network connection")
 	l3outCreateCmd.MarkFlagRequired("tenant")
 	l3outCreateCmd.MarkFlagRequired("name")
 }

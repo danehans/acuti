@@ -20,7 +20,7 @@ func init() {
 	appCmd.AddCommand(appCreateCmd)
 	appCreateCmd.Flags().StringVar(&aciFlags.tenant, "tenant", "", "Name of tenant")
 	appCreateCmd.Flags().StringVar(&aciFlags.name, "name", "", "Name of application profile")
-	appCreateCmd.Flags().StringVar(&aciFlags.descr, "description", "", "Description of app profile")
+	appCreateCmd.Flags().StringVar(&aciFlags.descr, "descr", "", "Description of app profile")
 	appCreateCmd.MarkFlagRequired("tenant")
 	appCreateCmd.MarkFlagRequired("name")
 }

@@ -20,7 +20,7 @@ func init() {
 	brCmd.AddCommand(brCreateCmd)
 	brCreateCmd.Flags().StringVar(&aciFlags.tenant, "tenant", "", "Name of tenant")
 	brCreateCmd.Flags().StringVar(&aciFlags.name, "name", "", "Name of bridge domain")
-	brCreateCmd.Flags().StringVar(&aciFlags.descr, "description", "", "Description of bridge domain")
+	brCreateCmd.Flags().StringVar(&aciFlags.descr, "descr", "", "Description of bridge domain")
 	brCreateCmd.MarkFlagRequired("tenant")
 	brCreateCmd.MarkFlagRequired("name")
 }

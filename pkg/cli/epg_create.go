@@ -22,7 +22,7 @@ func init() {
 	epgCreateCmd.Flags().StringVar(&aciFlags.app, "app", "", "Name of application profile")
 	epgCreateCmd.Flags().StringVar(&aciFlags.brdomain, "bridge-domain", "", "Name of bridge domain")
 	epgCreateCmd.Flags().StringVar(&aciFlags.name, "name", "", "Name of epg")
-	epgCreateCmd.Flags().StringVar(&aciFlags.descr, "description", "", "Description of epg")
+	epgCreateCmd.Flags().StringVar(&aciFlags.descr, "descr", "", "Description of epg")
 	epgCreateCmd.MarkFlagRequired("tenant")
 	epgCreateCmd.MarkFlagRequired("name")
 	epgCreateCmd.MarkFlagRequired("bridge")

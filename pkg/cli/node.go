@@ -8,7 +8,7 @@ import (
 var nodeCmd = &cobra.Command{
 	Use:   "node",
 	Short: "Manage ACI nodes",
-	Long:  `List, create & delete ACI nodes.`,
+	Long:  `List ACI nodes.`,
 }
 
 func init() {

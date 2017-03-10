@@ -19,19 +19,13 @@ var (
 func init() {
 	appCmd.AddCommand(appDelCmd)
 	appDelCmd.Flags().StringVar(&aciFlags.tenant, "tenant", "", "Name of tenant")
-	appCreateCmd.Flags().StringVar(&aciFlags.app, "app", "", "Name of application profile")
 	appDelCmd.Flags().StringVar(&aciFlags.name, "name", "", "Name of app")
 	appDelCmd.MarkFlagRequired("tenant")
-	appDelCmd.MarkFlagRequired("app")
 	appDelCmd.MarkFlagRequired("name")
 }
 
 func runAppDel(cmd *cobra.Command, args []string) {
 	if len(aciFlags.tenant) == 0 {
-		cmd.Help()
-		return
-	}
-	if len(aciFlags.app) == 0 {
 		cmd.Help()
 		return
 	}

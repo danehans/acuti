@@ -32,7 +32,7 @@ func runVrangeListCmd(cmd *cobra.Command, args []string) {
 	defer tw.Flush()
 
 	// Print the legend
-	fmt.Fprintf(tw, "NAME\tDESCRIPTION\n")
+	fmt.Fprintf(tw, "NAME\tDESCRIPTION\tSTATUS\tFROM\tTO\n")
 
 	// ACI Client
 	client := mustClientFromCmd(cmd)
@@ -50,6 +50,6 @@ func runVrangeListCmd(cmd *cobra.Command, args []string) {
 		exitWithError(ExitError, err)
 	}
 	for _, r := range resp {
-		fmt.Fprintf(tw, "%s\t%s\n", r["name"], r["descr"])
+		fmt.Fprintf(tw, "%s\t%s\t%s\t%s\t%s\n", r["name"], r["descr"], r["status"], r["from"], r["to"])
 	}
 }

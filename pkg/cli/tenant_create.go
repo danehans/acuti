@@ -19,7 +19,7 @@ var (
 func init() {
 	tenantCmd.AddCommand(tenantCreateCmd)
 	tenantCreateCmd.Flags().StringVar(&aciFlags.name, "name", "", "Name of tenant")
-	tenantCreateCmd.Flags().StringVar(&aciFlags.descr, "description", "", "Description of tenant")
+	tenantCreateCmd.Flags().StringVar(&aciFlags.descr, "descr", "", "Description of tenant")
 	tenantCreateCmd.MarkFlagRequired("name")
 }
 
